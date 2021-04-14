@@ -19,11 +19,6 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Install dependencies
-      run: |
-        pip3 install --upgrade setuptools
-        pip3 install .[dev]
-
     - name: Run --help
       run: |
         python3 oj-mini.py -h
