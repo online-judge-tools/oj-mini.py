@@ -74,7 +74,7 @@ class OjMiniTest(unittest.TestCase):
                 fh.write('16\n')
 
             with chdir(tempdir):
-                cmd = "{} -c 'print(int(input()) ** 2)'".format(sys.executable)
+                cmd = '{} -c "print(int(input()) ** 2)"'.format(sys.executable)
                 subprocess.check_call([sys.executable, str(cwd / 'oj-mini.py'), 't', '-c', cmd])
 
     def test_test_failure(self) -> None:
