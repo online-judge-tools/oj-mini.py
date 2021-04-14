@@ -6,7 +6,7 @@ This is for trial purposes only. Please use the full version for contests.
 
 ## Usage
 
-Copy [`oj-mini.py` file](https://raw.githubusercontent.com/online-judge-tools/oj-mini.py/master/oj-mini.py) to your local directory and run as:
+Install [Python](https://www.python.org/) 3.6 or later, copy [`oj-mini.py` file](https://raw.githubusercontent.com/online-judge-tools/oj-mini.py/master/oj-mini.py) to your local directory, and run commands like the following:
 
 ```console
 $ python3 oj-mini.py --help
