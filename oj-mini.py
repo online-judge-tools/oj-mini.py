@@ -106,9 +106,7 @@ def subcommand_download(*, url: str) -> bool:
         if len(pres) % 2 != 0:
             raise SampleParseError('an odd number of <pre> found')
         samples = []
-        for i in range(len(pres) // 2):
-            name_in, pre_in = pres[2 * i]
-            name_out, pre_out = pres[2 * i + 1]
+        for (name_in, pre_in), (name_out, pre_out) in zip(pres[::2], pres[1::2]):
             if name_in != 'input':
                 raise SampleParseError('<pre>...</pre> is expected in <div class="input"> but found in <div class="output">')
             if name_out != 'output':
@@ -125,9 +123,9 @@ def subcommand_download(*, url: str) -> bool:
         logger.error('test/ directory already exists')
         return False
     test_dir.mkdir(parents=True)
-    for i, (sample_in, sample_out) in enumerate(samples):
-        path_in = test_dir / 'sample-{}.in'.format(i + 1)
-        path_out = test_dir / 'sample-{}.out'.format(i + 1)
+    for i, (sample_in, sample_out) in enumerate(samples, start=1):
+        path_in = test_dir / 'sample-{}.in'.format(i)
+        path_out = test_dir / 'sample-{}.out'.format(i)
         try:
             logger.info('write: %s\n%s', str(path_in), sample_in.decode())
         except UnicodeDecodeError as e:
@@ -193,7 +191,7 @@ def subcommand_test(*, command: Optional[str]) -> bool:
         if expected_out is not None:
             if actual_out != expected_out:
                 if actual_out.split() == expected_out.split():
-                    logger.info('It was AC if it ignored white-space charactors. Use $ oj t --ignore-spaces-and-newlines')
+                    logger.info('It was AC if it ignored white-space charactors. Using the full oj, and run $ oj t --ignore-spaces-and-newlines')
                 verdict = 'WA'
         if proc.returncode != 0:
             logger.info('The return code is %s', proc.returncode)
