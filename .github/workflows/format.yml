@@ -1,0 +1,30 @@
+name: format
+
+on: [push, pull_request]
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+
+    - name: Install dependencies
+      run: pip3 install .[dev]
+
+    - name: Run pylint
+      run: pylint --rcfile=setup.cfg oj-mini.py
+
+    - name: Run isort
+      run: isort --check-only --diff oj-mini.py
+
+    - name: Run yapf
+      run: yapf --diff --recursive oj-mini.py
+
+    - name: Run mypy
+      run: mypy oj-mini.py

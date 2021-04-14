@@ -8,7 +8,7 @@ import sys
 import urllib.error
 import urllib.parse
 import urllib.request
-from logging import DEBUG, INFO, StreamHandler, basicConfig, getLogger
+from logging import DEBUG, INFO, basicConfig, getLogger
 from typing import *
 
 __version__ = '1.0.0'
@@ -182,7 +182,7 @@ def subcommand_test(*, command: Optional[str]) -> bool:
 
         # execute the command
         try:
-            proc = subprocess.run(command, shell=True, input=test_in, stdout=subprocess.PIPE)
+            proc = subprocess.run(command, shell=True, check=False, input=test_in, stdout=subprocess.PIPE)
         except subprocess.SubprocessError as e:
             logger.error('failed to run the command: %s', e)
             return False
@@ -214,7 +214,6 @@ def subcommand_test(*, command: Optional[str]) -> bool:
                 logger.info('actual output:\n%s', actual_out.decode())
             except UnicodeDecodeError as e:
                 logger.error('actual output: %s', e)
-            all_ac = False
         logger.info('%s', verdict)
 
     logger.info('%s AC / %s cases', ac_count, len(samples))
